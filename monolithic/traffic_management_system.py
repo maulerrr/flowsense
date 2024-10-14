@@ -1,11 +1,11 @@
 import time
 import random
 
-# Simulated traffic data
+
 data = [
     {'vehicle_id': 'V1', 'speed': 70, 'location': 'X1'},
     {'vehicle_id': 'V2', 'speed': 40, 'location': 'X2'},
-    {'vehicle_id': 'V3', 'speed': 20, 'location': 'X3'},  # This is an anomaly
+    {'vehicle_id': 'V3', 'speed': 20, 'location': 'X3'},  
     {'vehicle_id': 'V4', 'speed': 80, 'location': 'X4'}
 ]
 

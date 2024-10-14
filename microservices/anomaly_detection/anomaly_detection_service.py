@@ -1,7 +1,7 @@
 from kafka import KafkaConsumer, KafkaProducer
 import json
 
-# Initialize Kafka Consumer and Producer
+
 consumer = KafkaConsumer(
     'traffic_data',
     bootstrap_servers='localhost:9092',
@@ -13,7 +13,7 @@ producer = KafkaProducer(
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-# Anomaly detection based on speed (simple rule: speed < 30 is an anomaly)
+
 def detect_anomalies():
     for message in consumer:
         record = message.value

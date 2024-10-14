@@ -1,14 +1,14 @@
 from kafka import KafkaConsumer
 import json
 
-# Initialize Kafka Consumer
+
 consumer = KafkaConsumer(
     'incident_data',
     bootstrap_servers='localhost:9092',
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
-# Simulated response management
+
 def manage_response():
     for message in consumer:
         incident = message.value

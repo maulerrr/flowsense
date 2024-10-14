@@ -1,7 +1,7 @@
 from kafka import KafkaConsumer, KafkaProducer
 import json
 
-# Initialize Kafka Consumer and Producer
+
 consumer = KafkaConsumer(
     'anomaly_data',
     bootstrap_servers='localhost:9092',
@@ -13,7 +13,7 @@ producer = KafkaProducer(
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-# Simulated incident classification (simple rule-based logic)
+
 def classify_incidents():
     for message in consumer:
         anomaly_data = message.value
