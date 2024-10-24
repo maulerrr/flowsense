@@ -1,7 +1,3 @@
-Here’s a sample **README.md** for your project, **FlowSense**:
-
----
-
 # FlowSense: Microservices-Based Intelligent Traffic Incident Detection
 
 **FlowSense** is a framework for demonstrating the advantages of microservices in traffic incident detection and response. It compares the performance of an event-driven microservices architecture with a traditional monolithic system. FlowSense utilizes real-time data processing, anomaly detection, and machine learning models to analyze traffic patterns and manage incidents efficiently.
