@@ -1,0 +1,6 @@
+Event_ID,Timestamp,Vehicle_Type,Speed_kmh,Latitude,Longitude,Event_Type,Severity,Traffic_Density
+1,2024-09-13 13:10:48,Bus,72,51.101003,71.417789,Accident,High,91.41
+2,2024-10-19 14:34:09,Car,4,51.116445,71.396492,Normal,Low,45.52
+3,2024-11-24 18:52:58,Bus,36,51.15613,71.361778,Sudden De-celeration,Low,21.95
+4,2025-03-17 13:45:19,Bus,7,51.170038,71.41311,Sudden De-celeration,High,83.82
+5,2025-05-12 18:18:04,Car,63,51.132171,71.43923,Accident,Low,34.71
