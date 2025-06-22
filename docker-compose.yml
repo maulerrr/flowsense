@@ -1,34 +1,37 @@
-version: '3'
+version: '3.8'
 services:
   kafka:
-    image: wurstmeister/kafka
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
     ports:
-      - "9092:9092"
+      - "9092:9092"    # client traffic
+      - "9093:9093"    # controller traffic
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-
-  data_collection:
-    build: ./microservices/data_collection
-    depends_on:
-      - kafka
-
-  anomaly_detection:
-    build: ./microservices/anomaly_detection
-    depends_on:
-      - kafka
-
-  incident_detection:
-    build: ./microservices/incident_detection
-    depends_on:
-      - kafka
-
-  response_management:
-    build: ./microservices/response_management
-    depends_on:
-      - kafka
+      # 1) assign your cluster-id (must be a valid UUID).  
+      #    You can generate one with:
+      #      docker run --rm confluentinc/cp-kafka:7.5.0 \
+      #        kafka-storage random-uuid
+      KAFKA_CLUSTER_ID: "GEkmWiXlTjSM1WH0SZyBPw"
+      # 2) run as both broker & controller in this node
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_NODE_ID:       "1"
+      # 3) quorum voters (single‐node)
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      # listener definitions
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      # auto-create topics so you don't need to pre-create them
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    command:
+      - bash
+      - -c
+      - |
+        # format the storage dir if not already formatted (idempotent)
+        kafka-storage format \
+          --cluster-id "$$KAFKA_CLUSTER_ID" \
+          --config /etc/kafka/kraft/server.properties && \
+        # then start the broker
+        kafka-server-start /etc/kafka/kraft/server.properties
